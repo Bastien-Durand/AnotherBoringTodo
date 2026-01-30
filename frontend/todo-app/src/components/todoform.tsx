@@ -1,38 +1,53 @@
 import { useState } from "react";
 
-export const TodoForm = () => {
+export const TodoForm = (props) => {
   const [todoData, setTodoData] = useState({
     title: "",
     description: "",
   });
 
   //Add type to e?
-  const handleSubmit = (event) => {
-    event.prevent.default();
+  const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    props.onAddTodo(todoData);
+    console.log(todoData);
   };
 
-  const handleChange = () => {
-    return;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodoData({
+      ...todoData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
     <div>
       <h2>Todo Form</h2>
       <div className="Card">
-        <form action="">
+        <form action="submit" onSubmit={handleSubmit}>
           <div>
-            Title: <input />
+            Title:{" "}
+            <input
+              name="title"
+              value={todoData.title}
+              type="text"
+              onChange={handleChange}
+            />
           </div>
           <div>
-            Description <input />
+            Description{" "}
+            <input
+              name="description"
+              value={todoData.description}
+              type="text"
+              onChange={handleChange}
+            />
           </div>
           <div>
-            <button>Submit</button>
+            <button type="submit">Submit</button>
           </div>
         </form>
       </div>
     </div>
   );
 };
-
-//On submit the button needs to save to state
