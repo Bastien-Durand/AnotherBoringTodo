@@ -1,0 +1,51 @@
+.container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.todoItem {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 15px; /* Add spacing between content and button */
+}
+
+.todoContent {
+  flex: 1;
+  min-width: 0; /* Prevents overflow */
+  word-wrap: break-word; /* Breaks long words */
+}
+
+.todoTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.todoDescription {
+  color: #666;
+  margin: 5px 0;
+}
+
+.deleteButton {
+  background: #ff4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  flex-shrink: 0; /* Prevents button from shrinking */
+  white-space: nowrap; /* Keeps "Delete" on one line */
+}
+
+.deleteButton:hover {
+  background: #cc0000;
+}
