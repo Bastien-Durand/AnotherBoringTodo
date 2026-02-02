@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export const TodoForm = (props) => {
+export const TodoForm = ({
+  onAddTodo,
+}: {
+  onAddTodo: (data: { title: string; description: string }) => void;
+}) => {
   const [todoData, setTodoData] = useState({
     title: "",
     description: "",
@@ -9,8 +13,8 @@ export const TodoForm = (props) => {
   //Add type to e?
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    props.onAddTodo(todoData);
-    console.log(todoData);
+    onAddTodo(todoData);
+    setTodoData({ title: "", description: "" });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
