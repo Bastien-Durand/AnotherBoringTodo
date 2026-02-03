@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TodoForm } from "./components/ToDoForm";
 import { ToDoList } from "./components/ToDoList";
 import type { Todo } from "./types/Todo";
 import "./App.css";
 
 const App = () => {
-  const [allTodos, setAllTodos] = useState<Todo[]>([]);
+  const [allTodos, setAllTodos] = useState<Todo[]>(() => {
+    const saved = localStorage.getItem("todos");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(allTodos));
+  }, [allTodos]); // Runs every time allTodos changes
 
   const addTodo = (data: { title: string; description: string }) => {
     const todo = { ...data, id: Date.now(), completed: false };
