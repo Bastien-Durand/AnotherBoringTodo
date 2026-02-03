@@ -17,12 +17,23 @@ const App = () => {
     setAllTodos(newTodos);
   };
 
+  const toggleTodo = (id: number) => {
+    const updatedTodos = allTodos.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+    );
+    setAllTodos(updatedTodos);
+  };
+
   return (
     <>
       <div>
         <h1>App.jsx</h1>
         <TodoForm onAddTodo={addTodo} />
-        <ToDoList allTodos={allTodos} onDeleteTodo={deleteTodo} />
+        <ToDoList
+          allTodos={allTodos}
+          onDeleteTodo={deleteTodo}
+          onToggleTodo={toggleTodo}
+        />
       </div>
     </>
   );
