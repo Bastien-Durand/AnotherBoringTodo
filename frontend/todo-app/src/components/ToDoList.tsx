@@ -14,7 +14,7 @@ export const ToDoList = ({
 }: TodoListProps) => {
   return (
     <div className={styles.container}>
-      <h1>All Todos</h1>
+      <h2>View Todos</h2>
       {allTodos.map((todo) => (
         <div key={todo.id} className={styles.todoItem}>
           <div className={styles.todoContent}>

@@ -34,7 +34,7 @@ const App = () => {
   return (
     <>
       <div>
-        <h1>App.jsx</h1>
+        <h1>Another boring todo</h1>
         <TodoForm onAddTodo={addTodo} />
         <ToDoList
           allTodos={allTodos}

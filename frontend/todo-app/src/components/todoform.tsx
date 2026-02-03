@@ -10,9 +10,18 @@ export const TodoForm = ({
     description: "",
   });
 
-  //Add type to e?
+  const [error, setError] = useState("");
+
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (
+      todoData.title.trim().length === 0 ||
+      todoData.description.trim().length === 0
+    ) {
+      setError("Please fill in both title and description");
+      return;
+    }
+    setError("");
     onAddTodo(todoData);
     setTodoData({ title: "", description: "" });
   };
@@ -22,11 +31,13 @@ export const TodoForm = ({
       ...todoData,
       [e.target.name]: e.target.value,
     });
+    setError("");
   };
 
   return (
     <div>
-      <h2>Todo Form</h2>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      <h2>Add Todo</h2>
       <div className="Card">
         <form action="submit" onSubmit={handleSubmit}>
           <div>
