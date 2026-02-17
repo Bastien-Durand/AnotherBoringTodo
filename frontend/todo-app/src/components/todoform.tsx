@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const TodoForm = ({
+export const ToDoForm = ({
   onAddTodo,
 }: {
   onAddTodo: (data: { title: string; description: string }) => void;

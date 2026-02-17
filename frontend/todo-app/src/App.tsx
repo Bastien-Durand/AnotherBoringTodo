@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { TodoForm } from "./components/ToDoForm";
+import { ToDoForm } from "./components/ToDoForm";
 import { ToDoList } from "./components/ToDoList";
 import type { Todo } from "./types/Todo";
 import "./App.css";
@@ -83,7 +83,7 @@ const App = () => {
     <>
       <div>
         <h1>Another boring todo</h1>
-        <TodoForm onAddTodo={addTodo} />
+        <ToDoForm onAddTodo={addTodo} />
         <ToDoList
           allTodos={allTodos}
           onDeleteTodo={deleteTodo}
