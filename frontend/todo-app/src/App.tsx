@@ -7,7 +7,7 @@ import "./App.css";
 const App = () => {
   const [allTodos, setAllTodos] = useState<Todo[]>([]);
 
-  const API_URL = "http://localhost:5000";
+  const API_URL = "https://anotherboringtodo-backend.onrender.com";
 
   const getAllTodos = async () => {
     try {
