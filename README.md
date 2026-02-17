@@ -1,171 +1,134 @@
-# Todo App
+# Another Boring Todo
 
-A fully-functional todo application built with React, TypeScript, and Vite. Features CRUD operations, persistent storage, and form validation.
+A full-stack todo application built with React, TypeScript, Node.js, Express, and MongoDB Atlas. Features full CRUD operations, RESTful API design, and cloud deployment.
 
-## 🎯 Project Overview
+## Live Demo
 
-A complete todo management application demonstrating modern React development practices, TypeScript type safety, and local data persistence. Built as part of daily coding practice while preparing for junior developer roles.
+- **Frontend:** [another-boring-todo-hozmlvhka-bastien-durands-projects.vercel.app](https://another-boring-todo-hozmlvhka-bastien-durands-projects.vercel.app)
+- **Backend API:** [anotherboringtodo-backend.onrender.com](https://anotherboringtodo-backend.onrender.com)
 
-## 🛠️ Tech Stack
+> Note: The backend is hosted on Render's free tier and may take ~30 seconds to wake up on the first request.
 
-- **React** - Component-based UI library
-- **TypeScript** - Type-safe JavaScript
-- **Vite** - Fast development build tool
-- **CSS Modules** - Scoped component styling
-- **localStorage** - Client-side data persistence
+## Tech Stack
 
-## ✨ Features
+### Frontend
 
-### Completed
+- React
+- TypeScript
+- Vite
+- CSS Modules
 
-- ✅ Create new todos with title and description
-- ✅ Display list of all todos
-- ✅ Mark todos as complete/incomplete with checkbox
-- ✅ Visual feedback (strikethrough) for completed todos
-- ✅ Delete todos
-- ✅ Data persistence with localStorage (survives page refresh)
-- ✅ Form validation (prevents empty submissions)
-- ✅ Responsive design with CSS Modules
-- ✅ Full TypeScript type safety
+### Backend
 
-## 🚀 Getting Started
+- Node.js
+- Express
+- MongoDB Atlas
+- Mongoose
+
+## Features
+
+- Create new todos with title and description
+- View all todos fetched from the database
+- Toggle todo completion status
+- Delete todos
+- Form validation to prevent empty submissions
+- Responsive design with CSS Modules
+- Full TypeScript type safety
+- RESTful API with proper HTTP methods
+- Cloud-hosted MongoDB database
+
+## API Endpoints
+
+| Method | Endpoint     | Description         |
+| ------ | ------------ | ------------------- |
+| GET    | `/todos`     | Fetch all todos     |
+| POST   | `/todos`     | Create a new todo   |
+| PUT    | `/todos/:id` | Update a todo by ID |
+| DELETE | `/todos/:id` | Delete a todo by ID |
+
+## Project Structure
+
+```
+├── frontend/todo-app/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── TodoForm.tsx
+│   │   │   ├── TodoList.tsx
+│   │   │   └── *.module.css
+│   │   ├── types/
+│   │   │   └── Todo.ts
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   └── package.json
+├── backend/
+│   ├── models/
+│   │   └── todo.js
+│   ├── index.js
+│   ├── .env
+│   └── package.json
+└── README.md
+```
+
+## Getting Started
 
 ### Prerequisites
 
 - Node.js installed
-- npm or yarn
+- MongoDB Atlas account (or local MongoDB)
 
-### Installation
+### Backend Setup
 
 ```bash
-# Clone the repository
-git clone <your-repo-url>
-
-# Navigate to project directory
-cd todo-app
-
-# Install dependencies
+cd backend
 npm install
+```
 
-# Run development server
+Create a `.env` file in the backend directory:
+
+```
+MONGODB_URI=your_mongodb_connection_string
+PORT=5000
+```
+
+```bash
+node index.js
+```
+
+### Frontend Setup
+
+```bash
+cd frontend/todo-app
+npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) to view the app.
+Open http://localhost:5173 to view the app.
 
-## 📂 Project Structure
+## Key Technical Decisions
 
-```
-src/
-├── components/
-│   ├── TodoForm.tsx       # Form for creating new todos
-│   ├── TodoForm.module.css
-│   ├── TodoList.tsx       # Displays list of todos
-│   └── TodoList.module.css
-├── types/
-│   └── Todo.ts           # Shared TypeScript interface
-├── App.tsx               # Main app component with state management
-└── main.tsx             # App entry point
-```
+- **MongoDB Atlas over localStorage:** Moved from client-side persistence to a cloud database for real data persistence across devices and sessions
+- **RESTful routing:** Used consistent `/todos` resource naming with HTTP methods (GET, POST, PUT, DELETE) to define operations
+- **Re-fetch pattern:** After each mutation (create, update, delete), the frontend re-fetches the full todo list from the API to keep state in sync with the database
+- **Mongoose schemas with defaults:** Set `completed: false` as a schema default so the frontend only needs to send title and description when creating a todo
+- **Environment variables:** Secured database credentials using dotenv, keeping sensitive config out of version control
+- **CORS middleware:** Configured cross-origin requests to allow the frontend (Vercel) to communicate with the backend (Render)
 
-## 🧩 Key Concepts Demonstrated
-
-### React Fundamentals
-
-- Component composition and reusability
-- State management with `useState`
-- Side effects with `useEffect`
-- Controlled form inputs
-- Event handling
-- Conditional rendering
-- List rendering with `.map()`
-
-### TypeScript
-
-- Interface definitions
-- Type-safe props
-- Type-safe event handlers
-- Generic types with `useState`
-
-### Data Management
-
-- Lifting state up (parent-child communication)
-- Passing functions as props
-- Immutable state updates
-- localStorage persistence (save on change, load on mount)
-
-### Array Methods
-
-- `.map()` - Transform and render arrays
-- `.filter()` - Remove items from arrays
-- Spread operator (`...`) - Create new arrays/objects
-
-## 📝 Learning Goals
-
-This project was built to practice:
-
-- Building complete CRUD applications
-- Managing state in React
-- Type-safe development with TypeScript
-- Component architecture and data flow
-- Form handling and validation
-- Client-side data persistence
-- Modern CSS styling practices
-
-## 🎨 Styling
-
-Uses CSS Modules for scoped, component-level styling:
-
-- Clean, modern UI design
-- Hover effects on interactive elements
-- Visual feedback for completed items
-- Responsive layout
-- Box shadows for depth
-
-## 🔄 Data Flow
+## Data Flow
 
 ```
-User Input (TodoForm)
+User Action (React Frontend)
     ↓
-onAddTodo prop function
+Fetch request to Express API
     ↓
-App.tsx state update
+Mongoose query to MongoDB Atlas
     ↓
-localStorage save (useEffect)
+JSON response back to frontend
     ↓
-TodoList re-render
+React state update → UI re-render
 ```
 
-## 🧪 Future Enhancements
+## Deployment
 
-Potential additions for further learning:
-
-- Edit existing todos
-- Filter todos (all/active/completed)
-- Search functionality
-- Due dates
-- Categories/tags
-- Backend API integration (Node.js/Express)
-- Database persistence (MongoDB)
-- User authentication
-- Unit tests (Jest/React Testing Library)
-
-## 📚 Daily Practice
-
-This project is part of a structured learning routine:
-
-- **Morning (90 min):** Feature development
-- **Afternoon (90 min):** Interview prep and coding challenges
-- **Goal:** Build job-ready skills and portfolio projects
-
-## 🤝 About
-
-Built by Bastien Durand as part of a daily coding practice routine while transitioning from coaching to software engineering. Currently job hunting for junior full-stack developer roles.
-
-## 📄 License
-
-MIT
-
----
-
-**Current Status:** Core functionality complete and production-ready. Available for code review and discussion in technical interviews.
+- **Frontend:** Deployed on Vercel with automatic GitHub integration
+- **Backend:** Deployed on Render as a Node.js web service
+- **Database:** MongoDB Atlas free tier (M0 cluster)
