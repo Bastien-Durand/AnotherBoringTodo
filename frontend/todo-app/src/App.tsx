@@ -5,30 +5,78 @@ import type { Todo } from "./types/Todo";
 import "./App.css";
 
 const App = () => {
-  const [allTodos, setAllTodos] = useState<Todo[]>(() => {
-    const saved = localStorage.getItem("todos");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [allTodos, setAllTodos] = useState<Todo[]>([]);
+
+  const API_URL = "http://localhost:5000";
+
+  const getAllTodos = async () => {
+    try {
+      const response = await fetch(`${API_URL}/todos`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      setAllTodos(await response.json());
+    } catch (error) {
+      console.error(error instanceof Error ? error.message : error);
+    }
+  };
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(allTodos));
-  }, [allTodos]); // Runs every time allTodos changes
+    getAllTodos();
+  }, []);
 
-  const addTodo = (data: { title: string; description: string }) => {
-    const todo = { ...data, id: Date.now(), completed: false };
-    setAllTodos((value) => [...value, todo]);
+  const addTodo = async (data: { title: string; description: string }) => {
+    try {
+      const response = await fetch(`${API_URL}/todos`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      getAllTodos();
+    } catch (error) {
+      console.error(error instanceof Error ? error.message : error);
+    }
   };
 
-  const deleteTodo = (id: number) => {
-    const newTodos = allTodos.filter((todo) => todo.id !== id);
-    setAllTodos(newTodos);
+  const deleteTodo = async (_id: string) => {
+    try {
+      const response = await fetch(`${API_URL}/todos/${_id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      getAllTodos();
+    } catch (error) {
+      console.error(error instanceof Error ? error.message : error);
+    }
   };
 
-  const toggleTodo = (id: number) => {
-    const updatedTodos = allTodos.map((todo) =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo,
-    );
-    setAllTodos(updatedTodos);
+  const toggleTodo = async (_id: string) => {
+    const todo = allTodos.find((todo) => todo._id === _id);
+    try {
+      const response = await fetch(`${API_URL}/todos/${_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ completed: !todo?.completed }),
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      getAllTodos();
+    } catch (error) {
+      console.error(error instanceof Error ? error.message : error);
+    }
   };
 
   return (

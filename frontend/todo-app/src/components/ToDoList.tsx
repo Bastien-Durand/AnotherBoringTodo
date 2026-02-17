@@ -3,8 +3,8 @@ import styles from "./TodoList.module.css";
 
 interface TodoListProps {
   allTodos: Todo[];
-  onDeleteTodo: (id: number) => void;
-  onToggleTodo: (id: number) => void;
+  onDeleteTodo: (_id: string) => void;
+  onToggleTodo: (_id: string) => void;
 }
 
 export const ToDoList = ({
@@ -16,7 +16,7 @@ export const ToDoList = ({
     <div className={styles.container}>
       <h2>View Todos</h2>
       {allTodos.map((todo) => (
-        <div key={todo.id} className={styles.todoItem}>
+        <div key={todo._id} className={styles.todoItem}>
           <div className={styles.todoContent}>
             <div
               className={`${styles.todoTitle} ${todo.completed ? styles.completed : ""}`}
@@ -29,11 +29,11 @@ export const ToDoList = ({
             type="checkbox"
             checked={todo.completed}
             onChange={() => {
-              onToggleTodo(todo.id);
+              onToggleTodo(todo._id);
             }}
           ></input>
           <button
-            onClick={() => onDeleteTodo(todo.id)}
+            onClick={() => onDeleteTodo(todo._id)}
             className={styles.deleteButton}
           >
             Delete

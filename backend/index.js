@@ -1,6 +1,8 @@
 import express from "express";
+import cors from "cors";
 const app = express();
 app.use(express.json());
+app.use(cors());
 import dotenv from "dotenv/config";
 import mongoose from "mongoose";
 import Todo from "./models/todo.js";
@@ -27,15 +29,15 @@ app.get("/todos", async (req, res) => {
     const getAllTodos = await Todo.find();
     res.json(getAllTodos);
   } catch (error) {
-    console.log("Error creating todo", error);
-    res.status(500).json({ error: "Failed to create todo" });
+    console.log("Error fetching todo", error);
+    res.status(500).json({ error: "Failed to fetch todo" });
   }
 });
 
 app.post("/todos", async (req, res) => {
   try {
     const todoInfo = await Todo.create(req.body);
-    res.send("Todo Created");
+    res.json("Todo created");
   } catch (error) {
     console.log("Error creating todo", error);
     res.status(500).json({ error: "Failed to create todo" });
@@ -48,7 +50,7 @@ app.put("/todos/:id", async (req, res) => {
       req.params.id,
       req.body,
     );
-    res.json("Entry successfully updated");
+    res.json(updatedTodoEntry);
   } catch (error) {
     console.log("Error updating todo", error);
     res.status(500).json({ error: "Failed to update todo" });
@@ -56,10 +58,9 @@ app.put("/todos/:id", async (req, res) => {
 });
 
 app.delete("/todos/:id", async (req, res) => {
-  // req.params.id are the arguments for below
   try {
     const deletedTodoEntry = await Todo.findByIdAndDelete(req.params.id);
-    res.json("Entry successfully deleted");
+    res.json(deletedTodoEntry);
   } catch (error) {
     console.log("Error deleting todo", error);
     res.status(500).json({ error: "Failed to delete todo" });

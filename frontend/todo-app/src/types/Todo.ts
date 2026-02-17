@@ -2,5 +2,5 @@ export interface Todo {
   title: string;
   description: string;
   completed: boolean;
-  id: number;
+  _id: string;
 }
