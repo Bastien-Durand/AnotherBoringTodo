@@ -41,25 +41,29 @@ export const ToDoForm = ({
       <div className="Card">
         <form action="submit" onSubmit={handleSubmit}>
           <div>
-            Title:{" "}
+            <label htmlFor="title">Title</label>
             <input
               name="title"
               value={todoData.title}
               type="text"
               onChange={handleChange}
+              id="title"
             />
           </div>
           <div>
-            Description{" "}
+            <label htmlFor="description">Description</label>
             <input
               name="description"
               value={todoData.description}
               type="text"
               onChange={handleChange}
+              id="description"
             />
           </div>
           <div>
-            <button type="submit">Submit</button>
+            <button id="submit" type="submit">
+              Submit
+            </button>
           </div>
         </form>
       </div>
