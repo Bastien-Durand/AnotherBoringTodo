@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./TodoForm.module.css";
 
 export const ToDoForm = ({
   onAddTodo,
@@ -35,38 +36,42 @@ export const ToDoForm = ({
   };
 
   return (
-    <div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <h2>Add Todo</h2>
-      <div className="Card">
-        <form action="submit" onSubmit={handleSubmit}>
+    <div className={styles.formContainer}>
+      <h2 className={styles.formTitle}>Add Todo</h2>
+      {error && <p className={styles.error}>{error}</p>}
+      <form onSubmit={handleSubmit}>
+        <div className={styles.inputGroup}>
           <div>
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title" className={styles.label}>
+              Title
+            </label>
             <input
+              id="title"
               name="title"
               value={todoData.title}
               type="text"
               onChange={handleChange}
-              id="title"
+              className={styles.input}
             />
           </div>
           <div>
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description" className={styles.label}>
+              Description
+            </label>
             <input
+              id="description"
               name="description"
               value={todoData.description}
               type="text"
               onChange={handleChange}
-              id="description"
+              className={styles.input}
             />
           </div>
-          <div>
-            <button id="submit" type="submit">
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <button type="submit" className={styles.submitButton}>
+          Submit
+        </button>
+      </form>
     </div>
   );
 };

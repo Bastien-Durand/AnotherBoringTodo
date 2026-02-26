@@ -1,5 +1,5 @@
 import type { Todo } from "../types/Todo";
-import styles from "./TodoList.module.css";
+import styles from "./ToDoList.module.css";
 
 interface TodoListProps {
   allTodos: Todo[];
@@ -14,30 +14,29 @@ export const ToDoList = ({
 }: TodoListProps) => {
   return (
     <div className={styles.container}>
-      <h2>View Todos</h2>
       {allTodos.map((todo) => (
-        <div key={todo._id} className={styles.todoItem}>
+        <div
+          key={todo._id}
+          className={`${styles.todoItem} ${todo.completed ? styles.completed : ""}`}
+        >
           <div className={styles.todoContent}>
-            <div
-              className={`${styles.todoTitle} ${todo.completed ? styles.completed : ""}`}
-            >
-              {todo.title}
-            </div>
+            <div className={styles.todoTitle}>{todo.title}</div>
             <div className={styles.todoDescription}>{todo.description}</div>
           </div>
-          <input
-            type="checkbox"
-            checked={todo.completed}
-            onChange={() => {
-              onToggleTodo(todo._id);
-            }}
-          ></input>
-          <button
-            onClick={() => onDeleteTodo(todo._id)}
-            className={styles.deleteButton}
-          >
-            Delete
-          </button>
+          <div className={styles.actions}>
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => onToggleTodo(todo._id)}
+              className={styles.checkbox}
+            />
+            <button
+              onClick={() => onDeleteTodo(todo._id)}
+              className={styles.deleteButton}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ))}
     </div>
